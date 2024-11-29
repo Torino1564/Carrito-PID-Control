@@ -6,30 +6,18 @@ static constexpr auto ADC_PIN = 13;
 static constexpr auto PWM_PIN = 32; 
 static constexpr auto IN1_PIN = 21;
 static constexpr auto IN2_PIN = 25;
-// Variables
-static double Vref = 1.5f;
-static double Vin = 0;
 
+// Variables
 static double Dref = 1500;
 static double Din = 0;
 static double filteredDin = 0;
-
 static double Vo = 0;
-static double filteredVin = 0;
-static double alpha = 0.3;
-
-enum Direction {
-  FORWARD,
-  BACKWARD
-};
-
-static Direction direction = Direction::FORWARD;
 
 void controller();
 void planta();
+
 // Ku = 0.14     Tu = 1.8s
 static double Kp = 0.08, Ki = 0.01, Kd = 0.025;
-// static double Kp = 0.462, Kd = 0.16, Ki = 0.4;
 PID controlador(&Din, &Vo, &Dref, Kp, Ki, Kd, DIRECT);
 
 void setup() {
