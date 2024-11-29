@@ -10,7 +10,7 @@ static constexpr auto IN2_PIN = 25;
 static double Vref = 1.5f;
 static double Vin = 0;
 
-static double Dref = 2000;
+static double Dref = 1500;
 static double Din = 0;
 static double filteredDin = 0;
 
@@ -27,8 +27,9 @@ static Direction direction = Direction::FORWARD;
 
 void controller();
 void planta();
-
-static double Kp = 0.18, Kd = 0.035, Ki = 0.05;
+// Ku = 0.14     Tu = 1.8s
+static double Kp = 0.08, Ki = 0.01, Kd = 0.025;
+// static double Kp = 0.462, Kd = 0.16, Ki = 0.4;
 PID controlador(&Din, &Vo, &Dref, Kp, Ki, Kd, DIRECT);
 
 void setup() {
@@ -43,6 +44,7 @@ void setup() {
 }
 
 void loop() {
+  delay(100);
   controller();
   planta();
 }
@@ -71,5 +73,5 @@ void planta()
     digitalWrite(IN2_PIN, HIGH);
   }
   auto modVo = fabs(Vo);
-  analogWrite(PWM_PIN, modVo);
+  analogWrite(PWM_PIN, modVo*2);
 }
